@@ -38,22 +38,6 @@ npm install
 npm run dev
 ```
 
-## 📁 Project Structure
-
-  src/
-  │
-  ├── components/
-  │   ├── GameBoard.jsx
-  │   ├── EmojiSelector.jsx
-  │   ├── SettingsPanel.jsx  
-  │   ├── HelpModal.jsx
-  │   └── ScoreBoard.jsx
-  │
-  ├── App.jsx
-  ├── index.js
-  └── styles/
-      └── index.css
-
 🧠 Rules of the Game
   - Each player chooses an emoji category before the game starts.
   - On your turn, a random emoji from your category will be placed in a square.
