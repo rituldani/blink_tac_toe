@@ -19,12 +19,6 @@ A fun, interactive 2-player emoji twist on the classic Tic Tac Toe! Built with R
 
 ---
 
-## 📸 Screenshots
-
-![screenshot](./public/screenshot.png)
-
----
-
 ## 🛠 Tech Stack
 
 - **React**
@@ -68,11 +62,11 @@ npm run dev
   - Score is tracked across rounds. Alternate turns every new game.
 
 🔊 Sound Effects
-   - Place emoji: Click sound
-   - Win: Victory chime
-   - Invalid move: Error buzz
-   - Emoji vanishes: Soft vanish tone
+  - Place emoji: Click sound
+  - Win: Victory chime
+  - Invalid move: Error buzz
+  - Emoji vanishes: Soft vanish tone
 
 🌙 Theme
   - Default: Dark Mode
-  -  Toggle between light/dark themes from the settings icon (⚙️)
+  - Toggle between light/dark themes from the settings icon (⚙️)
