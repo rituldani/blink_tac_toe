@@ -24,11 +24,16 @@ export default function App() {
   const [showSettings, setShowSettings] = useState(false);
   const [isDark, setIsDark] = useState(true);
   const [playerMoves, setPlayerMoves] = useState({ player1: [], player2: [] });
-  const [startingPlayer, setStartingPlayer] = useState("player1")
   const [scores, setScores] = useState({
     player1: 0,
     player2: 0,
   });
+  const [playerNames, setPlayerNames] = useState({
+    player1: "Player 1",
+    player2: "Player 2",
+  });
+  const [editingPlayer, setEditingPlayer] = useState(null); // "player1" | "player2" | null
+
 
   const winningCombinations = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
 
@@ -110,6 +115,16 @@ export default function App() {
     setTurn(currentPlayer === "player1" ? "player2" : "player1");
   };
 
+  // const resetGame = () => {
+  //   playSound(sounds.newGame, isMuted);
+  //   setBoard(Array(9).fill(null));
+  //   setPlayerMoves({ player1: [], player2: [] });
+  //   setWinner(null);
+  //   setTurn("player1");
+  //   setPlayer1Category("");
+  //   setPlayer2Category("");
+  //   setIsCategorySelected(false);
+  // };
   const resetGame = () => {
     playSound(sounds.newGame, isMuted);
     setBoard(Array(9).fill(null));
@@ -119,6 +134,9 @@ export default function App() {
     setPlayer1Category("");
     setPlayer2Category("");
     setIsCategorySelected(false);
+    setScores({ player1: 0, player2: 0 }); // 🆕 reset scores
+    setPlayerNames({ player1: "Player 1", player2: "Player 2" }); // 🆕 reset names
+    setEditingPlayer(null); // 🆕 stop editing mode if open
   };
 
   const newGame = () => {
@@ -153,28 +171,47 @@ export default function App() {
               toggleTheme={() => setIsDark(!isDark)}
             />
           )}
+
           <CategorySelector
             player="player1"
             selectedCategory={player1Category}
             emojiCategories={emojiCategories}
             onSelect={handleCategorySelect}
+            playerName={playerNames.player1}
+            isEditing={editingPlayer === "player1"}
+            onEditToggle={() =>
+              setEditingPlayer(editingPlayer === "player1" ? null : "player1")
+            }
+            onNameChange={(newName) =>
+              setPlayerNames({ ...playerNames, player1: newName })
+            }
           />
+
           <CategorySelector
             player="player2"
             selectedCategory={player2Category}
             emojiCategories={emojiCategories}
             onSelect={handleCategorySelect}
+            playerName={playerNames.player2}
+            isEditing={editingPlayer === "player2"}
+            onEditToggle={() =>
+              setEditingPlayer(editingPlayer === "player2" ? null : "player2")
+            }
+            onNameChange={(newName) =>
+              setPlayerNames({ ...playerNames, player2: newName })
+            }
           />
+
         </div>
       ) : (
         <>
           <div className="text-center mb-4">
             <h2 className="text-xl font-semibold">🏆 Scores</h2>
-            <p>Player 1: {scores.player1} | Player 2: {scores.player2}</p>
+            <p>{playerNames.player1} {scores.player1} | {playerNames.player2} {scores.player2}</p>
           </div>
 
-          <GameBoard board={board} onCellClick={handleCellClick} />
-          <GameStatus turn={turn} winner={winner} onReset={resetGame} newGame={newGame} />
+          <GameBoard board={board} onCellClick={handleCellClick} player1Name={playerNames.player1} player2Name={playerNames.player2} />
+          <GameStatus turn={turn} winner={winner} onReset={resetGame} newGame={newGame} player1Name={playerNames.player1} player2Name={playerNames.player2} />
         </>
       )}
     </div>
